@@ -14,7 +14,7 @@ struct ListSpot: View {
         id: "recGiehEmfmocsFqL",
         createdTime: "2022-05-05T09:50:33.000Z",
         fields: spotFields(
-        imageName: "maison_du_diable",
+        imageName:"https://www.stickersmalin.com/images/ajoute/prd/115/115121-image_448x448.png",
         description: "Spooky !!",
         city: "Amityville",
         longitude: -73.414624,

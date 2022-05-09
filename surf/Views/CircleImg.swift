@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CircleImg: View {
     var imageName: String
+    
     var body: some View {
         AsyncImage(url: URL(string: imageName)){ image in
             image.resizable()
