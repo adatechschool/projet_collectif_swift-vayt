@@ -10,36 +10,48 @@ import Foundation
 
 struct SpotDetails: View {
     
-    var spot: Spot
+    @State var apiSpot = ApiSpot(
+        id: "recGiehEmfmocsFqL",
+        createdTime: "2022-05-05T09:50:33.000Z",
+        fields: spotFields(
+        imageName: "maison_du_diable",
+        description: "Spooky !!",
+        city: "Amityville",
+        longitude: -73.414624,
+        country: "USA",
+        latitude: 40.66679,
+        name: "Blabla"))
     
-//    func getSpot() {
-//        let urlString = "
-//        let url = URL(string: urlString)
-//
-//        URLSession.shared.dataTask(with: url!) {
-//            data, _, error in do {
-//                let decoder = JSONDecoder()
-//                let decodedData: [Spot] = try! decoder.decode([Spot].self, from: spot)
-//                self.spot = decodedData
-//            } catch {
-//                print("Error !")
-//            }
-//        }
-//    }
+    var spot : Spot
     
+    func getData() {
+        let urlString = "https://api.airtable.com/v0/appI8YDBcRniNVt9u/Spots/recGiehEmfmocsFqL?api_key=keyUf2J6tpBtwzKyG"
+        let url = URL(string: urlString)
+        URLSession.shared.dataTask(with: url!) {
+            apiSpot, _, error in
+            DispatchQueue.main.async {
+                if let apiSpot = apiSpot {
+                    do {
+                        let decoder = JSONDecoder()
+                        let decodedData = try decoder.decode(ApiSpot.self, from: apiSpot)
+                        self.apiSpot = decodedData
+                    } catch {
+                        print("there is an error : \(error)")
+                    }
+                }
+            }
+        }.resume()
+    }
+        
     var body: some View {
         
-        
-            ScrollView {
+            ScrollView{
                 MapView(coordinate: spot.locationCoordinate) .ignoresSafeArea(edges: .top)
                     .frame(height: 300)
                     .padding(.top, -20)
-                
                 CircleImg(image: spot.image)
                     .offset(y: -130)
-                .padding(.bottom, -130)
-            
-                
+                    .padding(.bottom, -130)
                 Text(spot.name)
                         .font(.title)
                         .padding()
@@ -53,15 +65,15 @@ struct SpotDetails: View {
             Divider()
             VStack(alignment: .leading) {
                 Text(spot.description)
+                Text(apiSpot.fields.name)
                     }
-                
+                Button("Refresh"){self.getData()}
         }
-        
     }
 }
-
-struct SpotDetails_Previews: PreviewProvider {
-    static var previews: some View {
-        SpotDetails(spot: spots[0])
-    }
-}
+                
+//struct SpotDetails_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SpotDetails(spot: spots[0])
+//    }
+//}

@@ -17,16 +17,6 @@ struct Spot: Hashable, Codable, Identifiable {
     var description: String
     var latitude: Double
     var longitude: Double
-    
-//    enum CodingKeys: String, Int, Double, CodingKey {
-//        case id: ""
-//        case name: "name"
-//        case city: "city"
-//        case country: "country"
-//        case description: "description"
-//        case latitude: "latitude"
-//        case longitude: "longitude"
-//    }
 
     private var imageName: String
     var image: Image {
@@ -41,3 +31,18 @@ struct Spot: Hashable, Codable, Identifiable {
     
 }
 
+struct ApiSpot: Decodable {
+    var id: String
+    var createdTime: String
+    var fields: spotFields
+    }
+
+struct spotFields: Decodable {
+    var imageName: String
+    var description: String
+    var city: String
+    var longitude: Double
+    var country: String
+    var latitude: Double
+    var name: String
+}
