@@ -13,9 +13,13 @@ struct Row: View {
     
     var body: some View {
         HStack {
-            Image(spot.fields.imageName)
-                .resizable()
-                .frame(width: 50, height: 50)
+            AsyncImage(url: URL(string: spot.fields.imageName))
+            { image in
+                image.resizable()
+            } placeholder: {
+                Color.white
+            }
+        .frame(width: 50, height: 50)
             Text(spot.fields.name)
         }
     }
