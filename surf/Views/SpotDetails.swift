@@ -22,26 +22,27 @@ struct SpotDetails: View {
         latitude: 40.66679,
         name: "Blabla"))
     
+    
     var spot : Spot
     
-    func getData() {
-        let urlString = "https://api.airtable.com/v0/appI8YDBcRniNVt9u/Spots/recGiehEmfmocsFqL?api_key=keyUf2J6tpBtwzKyG"
-        let url = URL(string: urlString)
-        URLSession.shared.dataTask(with: url!) {
-            apiSpot, _, error in
-            DispatchQueue.main.async {
-                if let apiSpot = apiSpot {
-                    do {
-                        let decoder = JSONDecoder()
-                        let decodedData = try decoder.decode(ApiSpot.self, from: apiSpot)
-                        self.apiSpot = decodedData
-                    } catch {
-                        print("there is an error : \(error)")
-                    }
-                }
-            }
-        }.resume()
-    }
+//    func getData() {
+//        let urlString = "https://api.airtable.com/v0/appI8YDBcRniNVt9u/Spots?api_key=keyUf2J6tpBtwzKyG"
+//        let url = URL(string: urlString)
+//        URLSession.shared.dataTask(with: url!) {
+//            apiSpot, _, error in
+//            DispatchQueue.main.async {
+//                if let apiSpot = apiSpot {
+//                    do {
+//                        let decoder = JSONDecoder()
+//                        let decodedData = try decoder.decode(ApiList.self, from: apiSpot)
+//                        self.apiSpot = decodedData
+//                    } catch {
+//                        print("there is an error : \(error)")
+//                    }
+//                }
+//            }
+//        }.resume()
+//    }
         
     var body: some View {
         
@@ -65,11 +66,10 @@ struct SpotDetails: View {
             Divider()
             VStack(alignment: .leading) {
                 Text(spot.description)
-                Text(apiSpot.fields.name)
-                    }
-                Button("Refresh"){self.getData()}
+//                Button("Refresh"){self.getData()}
         }
     }
+}
 }
                 
 //struct SpotDetails_Previews: PreviewProvider {

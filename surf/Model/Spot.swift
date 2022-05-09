@@ -37,7 +37,7 @@ struct ApiSpot: Decodable {
     var fields: spotFields
     }
 
-struct spotFields: Decodable {
+struct spotFields: Hashable, Decodable {
     var imageName: String
     var description: String
     var city: String
@@ -45,4 +45,8 @@ struct spotFields: Decodable {
     var country: String
     var latitude: Double
     var name: String
+}
+
+struct ApiList: Decodable {
+    var records: [ApiSpot]
 }

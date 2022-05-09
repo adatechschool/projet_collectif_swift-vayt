@@ -7,10 +7,10 @@
 
 import Foundation
 
-let urlString = "https://api.airtable.com/v0/appI8YDBcRniNVt9u/Spots?api_key=keyUf2J6tpBtwzKyG"
-let url = URL(string: urlString)
+
 
 var spots: [Spot] = load("spots.json")
+
 
 func load<T: Decodable>(_ filename: String) -> T {
     let data: Data

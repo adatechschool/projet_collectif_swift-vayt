@@ -9,20 +9,20 @@ import SwiftUI
 
 struct Row: View {
     
-    var spot: Spot
+    var spot: ApiSpot
     
     var body: some View {
         HStack {
-            spot.image
-                .resizable()
-                .frame(width: 50, height: 50)
-            Text(spot.name)
+//            spot.image
+//                .resizable()
+//                .frame(width: 50, height: 50)
+            Text(spot.fields.name)
         }
     }
 }
-
-struct Row_Previews: PreviewProvider {
-    static var previews: some View {
-        Row(spot: spots[0])
-    }
-}
+//
+//struct Row_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Row(spot: spots[0])
+//    }
+//}
