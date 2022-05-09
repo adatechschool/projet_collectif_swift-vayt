@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "name": "La Maison du Diableuh",
+        "city": "Amityville",
+        "country": "USA",
+        "description": "Spooky !!!",
+        "imageName": "maison_du_diable",
+        "latitude": 40.666790,
+        "longitude": -73.414624
+            
+    },
+    {   "id": 2,
+        "name": "Château de Bran",
+        "city": "Brasov",
+        "country": "Transylvanie (Roumanie)",
+        "description": "Chez Dracula !",
+        "imageName": "chateau_de_bran",
+
+            "latitude": 45.51490,
+            "longitude": 25.36725
+    }
+]
