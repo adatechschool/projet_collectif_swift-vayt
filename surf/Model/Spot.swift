@@ -37,7 +37,7 @@ struct ApiSpot: Decodable {
     var fields: spotFields
     }
 
-struct spotFields: Hashable, Decodable {
+struct spotFields: Decodable {
     var imageName: String
     var description: String
     var city: String
@@ -45,6 +45,12 @@ struct spotFields: Hashable, Decodable {
     var country: String
     var latitude: Double
     var name: String
+    
+    var locationCoordinate: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(
+            latitude: latitude,
+            longitude: longitude)
+    }
 }
 
 struct ApiList: Decodable {

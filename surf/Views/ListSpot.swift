@@ -20,7 +20,7 @@ struct ListSpot: View {
         longitude: -73.414624,
         country: "USA",
         latitude: 40.66679,
-        name: "Blabla"))])
+        name: "Some haunted house"))])
     
     
     func getData() {
@@ -42,23 +42,13 @@ struct ListSpot: View {
         }.resume()
     }
     
-    
-    
     var body: some View {
-//        NavigationView {
-//            List(allSpots.records) { spot in NavigationLink{
-//                SpotDetails(spot: spot)
-//            } label:{
-//                Row(spot: spot)
-//            }
-//            }
-//            .navigationTitle("Spooky Place Of Terror")
-        
+
         VStack {
             NavigationView {
                 List(allSpots.records, id: \.id){
                     spot in NavigationLink{
-                        SpotDetails(apiSpot: spot, spot: spots[0])
+                        SpotDetails(apiSpot: spot)
                     } label:{
                         Row(spot: spot)
                     }

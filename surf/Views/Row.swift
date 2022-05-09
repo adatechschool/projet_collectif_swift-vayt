@@ -13,9 +13,9 @@ struct Row: View {
     
     var body: some View {
         HStack {
-//            spot.image
-//                .resizable()
-//                .frame(width: 50, height: 50)
+            Image(spot.fields.imageName)
+                .resizable()
+                .frame(width: 50, height: 50)
             Text(spot.fields.name)
         }
     }

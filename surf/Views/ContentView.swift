@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        SpotDetails(spot: spots[0])
+        ListSpot()
     }
 }
 

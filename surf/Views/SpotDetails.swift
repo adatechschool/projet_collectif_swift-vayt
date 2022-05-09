@@ -21,52 +21,29 @@ struct SpotDetails: View {
         country: "USA",
         latitude: 40.66679,
         name: "Blabla"))
-    
-    
-    var spot : Spot
-    
-//    func getData() {
-//        let urlString = "https://api.airtable.com/v0/appI8YDBcRniNVt9u/Spots?api_key=keyUf2J6tpBtwzKyG"
-//        let url = URL(string: urlString)
-//        URLSession.shared.dataTask(with: url!) {
-//            apiSpot, _, error in
-//            DispatchQueue.main.async {
-//                if let apiSpot = apiSpot {
-//                    do {
-//                        let decoder = JSONDecoder()
-//                        let decodedData = try decoder.decode(ApiList.self, from: apiSpot)
-//                        self.apiSpot = decodedData
-//                    } catch {
-//                        print("there is an error : \(error)")
-//                    }
-//                }
-//            }
-//        }.resume()
-//    }
         
     var body: some View {
         
             ScrollView{
-                MapView(coordinate: spot.locationCoordinate) .ignoresSafeArea(edges: .top)
+                MapView(coordinate: apiSpot.fields.locationCoordinate) .ignoresSafeArea(edges: .top)
                     .frame(height: 300)
                     .padding(.top, -20)
-                CircleImg(image: spot.image)
+                CircleImg(imageName: apiSpot.fields.imageName)
                     .offset(y: -130)
                     .padding(.bottom, -130)
-                Text(spot.name)
+                Text(apiSpot.fields.name)
                         .font(.title)
                         .padding()
                 
             HStack{
-                Text(spot.city)
+                Text(apiSpot.fields.city)
                 Spacer()
-                Text(spot.country)
+                Text(apiSpot.fields.country)
             }
             .padding()
             Divider()
             VStack(alignment: .leading) {
-                Text(spot.description)
-//                Button("Refresh"){self.getData()}
+                Text(apiSpot.fields.description)
         }
     }
 }
