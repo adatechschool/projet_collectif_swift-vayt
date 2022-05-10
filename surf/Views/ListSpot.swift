@@ -57,6 +57,7 @@ struct ListSpot: View {
             VStack {
                 Button("Refresh"){getData()}
             }
+            
         }
 }
 }

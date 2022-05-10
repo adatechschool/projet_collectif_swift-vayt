@@ -1,5 +1,5 @@
 //
-//  Form.swift
+//  SpotForm.swift
 //  surf
 //
 //  Created by Victoire Stahl on 10/05/2022.
@@ -11,7 +11,7 @@ struct SpotForm: View {
     
     
     class RecordToSend: Encodable, ObservableObject {
-        var records: [SpotFields] = []
+        var records: [SpotFields] = [SpotFields()]
     }
     
     class SpotFields : Encodable, ObservableObject {
@@ -19,16 +19,16 @@ struct SpotForm: View {
     }
     
     class FormSpotData: Encodable, ObservableObject {
-        var name = ""
-        var city = ""
-        var country = ""
-        var description = ""
-        var latitude = ""
-        var longitude = ""
-        var image = ""
+        var name = "blop"
+        var city = "blop"
+        var country = "blop"
+        var description = "blop"
+        var latitude = "blop"
+        var longitude = "blop"
+        var image = "blop"
       }
     
-    @StateObject var formData = RecordToSend()
+    @ObservedObject var formData = RecordToSend()
 
     
     var body: some View {
@@ -53,6 +53,7 @@ struct SpotForm: View {
 
 
     func sendSpot() async {
+        print("posting")
         guard let encoded = try? JSONEncoder().encode(formData) else {
             print("Failed to encode order")
             return
@@ -64,8 +65,11 @@ struct SpotForm: View {
         request.httpMethod = "POST"
 
         do {
-            let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)
-            // handle the result
+            let (data, bla) = try await URLSession.shared.upload(for: request, from: encoded)
+            print("posted \(data) \(bla)")
+            print(encoded)
+            print(formData)
+            print($formData.records[0].fields.name)
         } catch {
             print("Spooky error")
         }
