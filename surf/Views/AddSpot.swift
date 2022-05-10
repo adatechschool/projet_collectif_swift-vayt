@@ -14,9 +14,7 @@ struct AddSpot: View {
     @State var city: String = ""
     
     var body: some View {
-        Form {
-            TextField("City", text: $city )
-        }
+        SpotForm()
         .navigationTitle("Add a spot")
     }
 }
