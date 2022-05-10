@@ -52,7 +52,7 @@ struct ListSpot: View {
                     } label:{
                         Row(spot: spot)
                     }
-                }.navigationTitle("Spooky Place Of Terror")
+                }.navigationTitle("Spooky Places")
             }
             VStack {
                 Button("Refresh"){getData()}
