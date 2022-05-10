@@ -10,12 +10,12 @@ import SwiftUI
 struct SpotForm: View {
     
     
-    class RecordToSend: Encodable, ObservableObject {
-        var records: [SpotFields] = [SpotFields()]
+    struct RecordToSend: Encodable {
+        var records: [SpotFields]
     }
     
-    class SpotFields : Encodable, ObservableObject {
-        var fields: FormSpotData = FormSpotData()
+    struct SpotFields : Encodable {
+        var fields: FormSpotData
     }
     
     class FormSpotData: Encodable, ObservableObject {
@@ -23,25 +23,32 @@ struct SpotForm: View {
         var city = "blop"
         var country = "blop"
         var description = "blop"
-        var latitude = "blop"
-        var longitude = "blop"
-        var image = "blop"
+        var imageName = "blop"
+        var latitude: Double = 1234
+        var longitude: Double = 1234
       }
     
-    @ObservedObject var formData = RecordToSend()
-
+    @ObservedObject var formData = FormSpotData()
+    
+    var coordFormater: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.decimalSeparator = "."
+        formatter.groupingSeparator = ""
+        return formatter
+    }()
     
     var body: some View {
         VStack{
             Text("Add a spooky place !")
             Form {
-                TextField("name", text: $formData.records[0].fields.name)
-                TextField("city", text: $formData.records[0].fields.city)
-                TextField("country", text: $formData.records[0].fields.country)
-                TextField("description", text: $formData.records[0].fields.description)
-                TextField("latitude", text: $formData.records[0].fields.latitude)
-                TextField("longitude", text: $formData.records[0].fields.longitude)
-                TextField("image URL", text: $formData.records[0].fields.image)
+                TextField("name", text: $formData.name)
+                TextField("city", text: $formData.city)
+                TextField("country", text: $formData.country)
+                TextField("description", text: $formData.description)
+                TextField("latitude", value: $formData.latitude, formatter: coordFormater)
+                TextField("longitude", value: $formData.longitude, formatter: coordFormater)
+                TextField("image URL", text: $formData.imageName)
                 Button("Spook me !") {
                     Task {
                         await sendSpot()
@@ -54,7 +61,9 @@ struct SpotForm: View {
 
     func sendSpot() async {
         print("posting")
-        guard let encoded = try? JSONEncoder().encode(formData) else {
+        let dataToSend: RecordToSend = RecordToSend(records: [SpotFields(fields: formData)])
+        print("posting")
+        guard let encoded = try? JSONEncoder().encode(dataToSend) else {
             print("Failed to encode order")
             return
         }
@@ -68,8 +77,8 @@ struct SpotForm: View {
             let (data, bla) = try await URLSession.shared.upload(for: request, from: encoded)
             print("posted \(data) \(bla)")
             print(encoded)
-            print(formData)
-            print($formData.records[0].fields.name)
+            print(dataToSend)
+            print($formData.name)
         } catch {
             print("Spooky error")
         }
