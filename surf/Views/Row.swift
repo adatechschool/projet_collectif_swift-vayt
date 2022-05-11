@@ -21,10 +21,17 @@ struct Row: View {
             }
         .frame(width: 50, height: 50)
             Text(spot.fields.name)
-        }
+        Spacer()
+        
+//        if spot.isFavorite {
+//            Image(systemName: "star.fill")
+//                .foregroundColor(.purple)
+//        }
     }
 }
-//
+
+}
+
 //struct Row_Previews: PreviewProvider {
 //    static var previews: some View {
 //        Row(spot: spots[0])

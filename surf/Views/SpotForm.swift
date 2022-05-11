@@ -19,13 +19,13 @@ struct SpotForm: View {
     }
     
     class FormSpotData: Encodable, ObservableObject {
-        var name = "blop"
-        var city = "blop"
-        var country = "blop"
-        var description = "blop"
-        var imageName = "blop"
-        var latitude: Double = 1234
-        var longitude: Double = 1234
+        var name = ""
+        var city = ""
+        var country = ""
+        var description = ""
+        var imageName = ""
+        var latitude: Double = 0
+        var longitude: Double = 0
       }
     
     @ObservedObject var formData = FormSpotData()
