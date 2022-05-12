@@ -29,6 +29,8 @@ struct SpotForm: View {
       }
     
     @ObservedObject var formData = FormSpotData()
+    @State private var confirmationMessage = ""
+    @State private var showingConfirmation = false
     
     var coordFormater: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -40,8 +42,10 @@ struct SpotForm: View {
     
     var body: some View {
         VStack{
-            Text("Add a spooky place !")
+            Text("Add a spooky place !").font(.title)
+            Text("All fields are mandatory").font(.title3)
             Form {
+                Section {
                 TextField("name", text: $formData.name)
                 TextField("city", text: $formData.city)
                 TextField("country", text: $formData.country)
@@ -49,17 +53,22 @@ struct SpotForm: View {
                 TextField("latitude", value: $formData.latitude, formatter: coordFormater)
                 TextField("longitude", value: $formData.longitude, formatter: coordFormater)
                 TextField("image URL", text: $formData.imageName)
-                Button("Spook me !") {
-                    Task {
-                        await sendSpot()
+                }
+                Section {
+                    Button("Spook me !") {
+                        Task {
+                            await sendSpot()
+                        }
                     }
                 }
             }
-        }
+        }.alert("Thank you!", isPresented: $showingConfirmation) {Button("OK"){}} message: {
+            Text(confirmationMessage)}
     }
 
 
     func sendSpot() async {
+        
         print("posting")
         let dataToSend: RecordToSend = RecordToSend(records: [SpotFields(fields: formData)])
         print("posting")
@@ -74,11 +83,9 @@ struct SpotForm: View {
         request.httpMethod = "POST"
 
         do {
-            let (data, bla) = try await URLSession.shared.upload(for: request, from: encoded)
-            print("posted \(data) \(bla)")
-            print(encoded)
-            print(dataToSend)
-            print($formData.name)
+            let (_, _) = try await URLSession.shared.upload(for: request, from: encoded)
+            confirmationMessage = "You added a spooky spot !"
+            showingConfirmation = true
         } catch {
             print("Spooky error")
         }

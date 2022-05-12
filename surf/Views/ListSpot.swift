@@ -14,19 +14,7 @@ struct ListSpot: View {
     
     @State var welcome = true
     
-    @State var allSpots: [ApiSpot] = [
-//        id: "recGiehEmfmocsFqL",
-//        createdTime: "2022-05-05T09:50:33.000Z",
-//        isFavorite: false,
-//        fields: spotFields(
-//        imageName:"https://www.stickersmalin.com/images/ajoute/prd/115/115121-image_448x448.png",
-//        description: "Spooky !!",
-//        city: "Amityville",
-//        longitude: -73.414624,
-//        country: "USA",
-//        latitude: 40.66679,
-//        name: "Some haunted house")
-    ]
+    @State var allSpots: [ApiSpot] = []
     
 //    var filteredSpots: [ApiSpot] {
 //        allSpots.filter { spot in
@@ -35,7 +23,7 @@ struct ListSpot: View {
 //    }
     
     func getData() {
-    let urlString = "https://api.airtable.com/v0/appI8YDBcRniNVt9u/Spots?api_key=keyUf2J6tpBtwzKyG"
+        let urlString = "https://api.airtable.com/v0/appI8YDBcRniNVt9u/Spots?api_key=keyUf2J6tpBtwzKyG"
         let url = URL(string: urlString)
         URLSession.shared.dataTask(with: url!) {
             apiSpot, _, error in
@@ -90,9 +78,6 @@ struct ListSpot: View {
                 }
             }
         }
-        
-        
-//
     }
 }
 
