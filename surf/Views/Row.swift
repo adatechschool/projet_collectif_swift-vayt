@@ -9,18 +9,18 @@ import SwiftUI
 
 struct Row: View {
     
-    var spot: ApiSpot
+    var spot: ShortSpot
     
     var body: some View {
         HStack {
-            AsyncImage(url: URL(string: spot.fields.imageName))
+            AsyncImage(url: URL(string: spot.image_URL))
             { image in
                 image.resizable()
             } placeholder: {
                 Color.white
             }
         .frame(width: 50, height: 50)
-            Text(spot.fields.name)
+            Text(spot.name)
         Spacer()
         
 //        if spot.isFavorite {

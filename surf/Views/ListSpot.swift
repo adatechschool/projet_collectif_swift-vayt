@@ -14,7 +14,7 @@ struct ListSpot: View {
     
     @State var welcome = true
     
-    @State var allSpots: [ApiSpot] = []
+    @State var allSpots: [ShortSpot] = []
     
 //    var filteredSpots: [ApiSpot] {
 //        allSpots.filter { spot in
@@ -23,7 +23,7 @@ struct ListSpot: View {
 //    }
     
     func getData() {
-        let urlString = "https://api.airtable.com/v0/appI8YDBcRniNVt9u/Spots?api_key=keyUf2J6tpBtwzKyG"
+        let urlString = "http://localhost:8080/list"
         let url = URL(string: urlString)
         URLSession.shared.dataTask(with: url!) {
             apiSpot, _, error in
@@ -32,7 +32,7 @@ struct ListSpot: View {
                     do {
                         let decoder = JSONDecoder()
                         let decodedData = try decoder.decode(ApiList.self, from: apiSpot)
-                        self.allSpots = decodedData.records
+                        self.allSpots = decodedData.Shortspots
                         welcome = false
                     } catch {
                         print("there is an error : \(error)")
@@ -58,16 +58,14 @@ struct ListSpot: View {
                         .font(.title)
                         .background(Color(red: 0, green: 0, blue: 0))
                         .clipShape(Capsule())
-
-                        
             }.background(
                 Image("jiji"))
             }
             else {
                 NavigationView {
-                    List(allSpots, id: \.id){
+                    List(allSpots, id: \.idspot){
                         spot in NavigationLink{
-                            SpotDetails(apiSpot: spot)
+                            SpotDetails(spotId:spot.idspot)
                         } label:{
                             Row(spot: spot)
                         }

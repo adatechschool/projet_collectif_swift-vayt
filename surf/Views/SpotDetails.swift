@@ -10,34 +10,62 @@ import Foundation
 
 struct SpotDetails: View {
     
-    @State var apiSpot: ApiSpot
+    @State var spotId: String
     
+    @State var apiSpot: SpotFields = SpotFields(idspot: "", name: "", description: "", city:"", country:"", longitude:0, latitude:0, image_URL:"")
+   
+    func getSpot() {
+        let urlString = "http://localhost:8080/spot/" + spotId
+        let url = URL(string: urlString)
+        URLSession.shared.dataTask(with: url!) {
+            spot, _, error in
+            DispatchQueue.main.async {
+                if let spot = spot {
+                    do {
+                        let decoder = JSONDecoder()
+                        let decodedData = try decoder.decode(SpotFields.self, from: spot)
+                        self.apiSpot = decodedData
+                        print(apiSpot)
+                    } catch {
+                        print("there is an error : \(error)")
+                    }
+                }
+            }
+        }.resume()
+    }
+
+
     var body: some View {
-        
-            ScrollView{
-                MapView(coordinate: apiSpot.fields.locationCoordinate) .ignoresSafeArea(edges: .top)
+//        VStack {
+//            Button("Get SPOT"){getSpot()}
+//        }
+
+         ScrollView{
+                MapView(coordinate: apiSpot.locationCoordinate) .ignoresSafeArea(edges: .top)
                     .frame(height: 300)
                     .padding(.top, -20)
-                CircleImg(imageName: apiSpot.fields.imageName)
+                CircleImg(imageName: apiSpot.image_URL)
                     .offset(y: -70)
                     .padding(.bottom, -60)
-                Text(apiSpot.fields.name)
+                Text(apiSpot.name)
                         .font(.title)
                         .padding()
-                
+
             HStack{
-                Text(apiSpot.fields.city)
+                Text(apiSpot.city)
                 Spacer()
-                Text(apiSpot.fields.country)
+                Text(apiSpot.country)
             }
             .padding()
             Divider()
             VStack(alignment: .leading) {
-                Text(apiSpot.fields.description)
+                Text(apiSpot.description)
         }
-    }
+    }.onAppear{self.getSpot()}
 }
 }
+
+    
                 
 //struct SpotDetails_Previews: PreviewProvider {
 //    static var previews: some View {

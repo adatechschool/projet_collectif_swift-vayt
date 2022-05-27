@@ -30,26 +30,27 @@ import CoreLocation
 //    }
 //}
 
-struct ApiList: Decodable {
-    var records: [ApiSpot]
+struct ApiList : Decodable {
+    var Shortspots: [ShortSpot]
 }
 
-struct ApiSpot: Decodable {
-    var id: String
-    var createdTime: String
- //   var isFavorite: Bool
-    var fields: spotFields
-    }
+//struct ApiSpot: Decodable {
+//    var id: String
+//    var createdTime: String
+// //   var isFavorite: Bool
+//    var fields: spotFields
+//    }
 
-struct spotFields: Decodable {
-    var imageName: String
+struct SpotFields: Decodable {
+    var idspot: String
+    var name: String
     var description: String
     var city: String
-    var longitude: Double
     var country: String
+    var longitude: Double
     var latitude: Double
-    var name: String
-    
+    var image_URL: String
+
     var locationCoordinate: CLLocationCoordinate2D {
         CLLocationCoordinate2D(
             latitude: latitude,
@@ -57,4 +58,8 @@ struct spotFields: Decodable {
     }
 }
 
-
+struct ShortSpot: Decodable {
+    var idspot: String
+    var name: String
+    var image_URL: String
+}
